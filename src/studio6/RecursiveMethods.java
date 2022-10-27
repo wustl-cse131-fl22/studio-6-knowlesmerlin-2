@@ -12,9 +12,12 @@ public class RecursiveMethods {
 	 *         ...)
 	 */
 	public static double geometricSum(int n) {
-		
+			if(n==0) {
+				return 0;
+			}else {
+				return (1/Math.pow(2,n))+ geometricSum(n-1);
+			}
 			// FIXME compute the geometric sum for the first n terms recursively
-			return 0;
 		
 	}
 
@@ -27,9 +30,13 @@ public class RecursiveMethods {
 	 * @return greatest common divisor of p and q
 	 */
 	public static int gcd(int p, int q) {
+		if((p%q)==0) {
+			return q;
+		}else {
+			return gcd(q,(p%q));
+		}
 		
-			// FIXME compute the gcd of p and q using recursion
-			return 0;
+			// FIXME compute the gcd of p and q using recursion			return 0;
 		
 	}
 
@@ -44,12 +51,30 @@ public class RecursiveMethods {
 	public static int[] toReversed(int[] array) {
 		
 			// FIXME create a helper method that can recursively reverse the given array
-			return new int[0];
+			return helper(array, 0);
+		
+	}
+	
+	public static int[] helper(int[] array, int index) {
+		int [] reversedArray = new int[array.length];
+		for (int i = 0; i<array.length; i++) {
+			reversedArray[i]=array[i];
+		}
+		if (index==array.length/2) {
+			return reversedArray;
+		}
+		else {
+			reversedArray[index]=array[array.length-1-index];
+			reversedArray[array.length-1-index]=array[index];
+			return helper(reversedArray, index+1);
+		}
+		
 		
 	}
 
 	/**
-	 * @param xCenter                       x-coordinate of the center of the circle
+	 * @param xCenter       
+	 *                x-coordinate of the center of the circle
 	 *                                      at the current depth
 	 * @param yCenter                       y-coordinate of the center of the circle
 	 *                                      at the current depth
@@ -61,6 +86,15 @@ public class RecursiveMethods {
 			double radiusMinimumDrawingThreshold) {
 		
 		// FIXME
+		if(radius<=radiusMinimumDrawingThreshold) {
+			return;
+		}else {
+			StdDraw.circle(xCenter,yCenter,radius);
+			circlesUponCircles(xCenter+radius,yCenter,radius/3.0,radiusMinimumDrawingThreshold);
+			circlesUponCircles(xCenter,yCenter+radius,radius/3.0,radiusMinimumDrawingThreshold);
+			circlesUponCircles(xCenter-radius,yCenter,radius/3.0,radiusMinimumDrawingThreshold);
+			circlesUponCircles(xCenter,yCenter-radius,radius/3.0,radiusMinimumDrawingThreshold);
+		}
 	}
 
 }
